@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <context id="mybatisGenerator" targetRuntime="MyBatis3">
+
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!--指定连接到目标数据库-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/ssm?serverTimezone=UTC"
+                        userId="root"
+                        password="root">
+            <!--解决识别不了主键的问题-->
+            <property name="useInformationSchema" value="true"/>
+        </jdbcConnection>
+
+        <!--Java类型解析器-->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--
+            Java Model 指定JavaBean生成策略
+            targetPackage：指定目标包名
+            targetProject:指定目标工程
+        -->
+        <javaModelGenerator targetPackage="com.kelo.bean" targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--mapper映射文件生成位置-->
+        <sqlMapGenerator targetPackage="mapper"  targetProject=".\src\main\resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!--指定mapper接口所在位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.kelo.mapper"  targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!--指定要逆向分析哪些表：根据表建JavaBean-->
+        <table tableName="paper" domainObjectName="Paper"></table>
+    </context>
+</generatorConfiguration>
