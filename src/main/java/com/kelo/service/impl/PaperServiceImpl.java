@@ -1,6 +1,7 @@
 package com.kelo.service.impl;
 
 import com.kelo.bean.Paper;
+import com.kelo.bean.PaperExample;
 import com.kelo.mapper.PaperMapper;
 import com.kelo.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,12 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public int updatePaper(Paper paper) {
-        return paperMapper.updateByPrimaryKeySelective(paper);
+        System.out.println(paper);
+        PaperExample example = new PaperExample();
+        PaperExample.Criteria criteria = example.createCriteria();
+        criteria.andPaperIdEqualTo(paper.getPaperId());
+        System.out.println(criteria);
+        return paperMapper.updateByExampleSelective(paper,example);
     }
 
     @Override

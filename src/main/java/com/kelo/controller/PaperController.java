@@ -61,8 +61,9 @@ public class PaperController {
      */
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable("id")Integer paperId,Model model){
+        System.out.println("controller执行删除...");
         paperService.deleteById(paperId);
-        return "";
+        return "redirect:/paper/findAll";
     }
 
     /**
@@ -70,10 +71,10 @@ public class PaperController {
      * @param paper
      * @return
      */
-    @RequestMapping(value = "/update")
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     public String update(Paper paper){
         paperService.updatePaper(paper);
-        return "";
+        return "redirect:/paper/findAll";
     }
 
     /**
@@ -81,10 +82,20 @@ public class PaperController {
      * @param paper
      * @return
      */
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
     public String save(Paper paper){
+        System.out.println(paper);
         paperService.savePaper(paper);
 
-        return "";
+        return "redirect:/paper/findAll";
+    }
+
+    @RequestMapping(value = "/toUpdate/{id}")
+    public String toUpdatePage(@PathVariable("id")Integer id,Model model){
+        System.out.println("controller执行更新...");
+        Paper paper = paperService.queryById(id);
+        model.addAttribute("paper", paper);
+        return "update";
     }
 
 }

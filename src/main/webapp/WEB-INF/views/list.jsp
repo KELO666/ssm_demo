@@ -33,7 +33,7 @@
     </div>
     <div class="row">
         <div class="col-md-4 column">
-            <a class="btn btn-primary" href="#">新增</a>
+            <a class="btn btn-primary" href="${path}/add.jsp">新增</a>
         </div>
     </div>
     <div class="row clearfix">
@@ -56,8 +56,8 @@
                         <th>${paper.number}</th>
                         <th>${paper.detail}</th>
                         <th>
-                            <a id="update_a" href="#">更改</a> |
-                            <a id="delete_a" href="#">删除</a>
+                            <a id="update_a" class="btn btn-primary" href="${path}/paper/toUpdate/${paper.paperId}">修改</a> |
+                            <a id="delete_a" class="btn btn-danger" href="${path}/paper/delete/${paper.paperId}">删除</a>
                         </th>
                     </tr>
                 </c:forEach>
