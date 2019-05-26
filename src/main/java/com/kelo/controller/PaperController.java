@@ -7,11 +7,15 @@ import com.kelo.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -72,7 +76,17 @@ public class PaperController {
      * @return
      */
     @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public String update(Paper paper){
+    public String update(@Validated Paper paper, BindingResult bindingResult,Model model){
+        if (bindingResult.hasErrors()){
+            List<FieldError> errors = bindingResult.getFieldErrors();
+            for (FieldError error : errors) {
+                System.out.println(error.getField()+" * "+error.getDefaultMessage());
+                model.addAttribute("ERR_"+error.getField(), error.getDefaultMessage());
+            }
+            model.addAttribute("paper", paper);
+            Integer id = paper.getPaperId();
+            return "redirect:/paper/toUpdate/"+id;
+        }
         paperService.updatePaper(paper);
         return "redirect:/paper/findAll";
     }
@@ -83,7 +97,16 @@ public class PaperController {
      * @return
      */
     @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public String save(Paper paper){
+    public String save(@Validated Paper paper, BindingResult bindingResult, Model model, HttpServletRequest request){
+        if (bindingResult.hasErrors()){
+            List<FieldError> errors = bindingResult.getFieldErrors();
+            for (FieldError error : errors) {
+                System.out.println(error.getField()+" * "+error.getDefaultMessage());
+                model.addAttribute("ERR_"+error.getField(), error.getDefaultMessage());
+            }
+            model.addAttribute("paper", paper);
+            return "redirect:/"+request.getContextPath()+"/add.jsp";
+        }
         System.out.println(paper);
         paperService.savePaper(paper);
 
@@ -92,7 +115,7 @@ public class PaperController {
 
     @RequestMapping(value = "/toUpdate/{id}")
     public String toUpdatePage(@PathVariable("id")Integer id,Model model){
-        System.out.println("controller执行更新...");
+//        System.out.println("controller执行更新...");
         Paper paper = paperService.queryById(id);
         model.addAttribute("paper", paper);
         return "update";

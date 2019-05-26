@@ -1,12 +1,21 @@
 package com.kelo.bean;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 public class Paper {
     private Integer paperId;
 
+    @NotEmpty(message = "书名不能为空！")
+    @Pattern(regexp = "[\\u4e00-\\u9fa5a-zA-Z0-9]{4,12}",message = "书籍名称长度为4-12位中英文数字组合！")
     private String name;
 
+    @NotEmpty(message = "库存不能为空或0！")
+    @Pattern(regexp = "^\\d{1,4}$",message = "库存范围为1~9999！")
     private Integer number;
 
+    @NotEmpty(message = "描述不能为空！")
+    @Pattern(regexp = "[\\u4e00-\\u9fa5a-zA-Z0-9]{10,50}",message = "描述内容至少10字，不得超过50字!")
     private String detail;
 
     @Override
