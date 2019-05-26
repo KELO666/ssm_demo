@@ -108,17 +108,17 @@
     <div class="form-group">
         <label for="bookName">书籍名称</label>
         <input type="text" class="form-control" id="bookName" name="name" placeholder="请输入书籍名称" onblur="validateName(this)" value="${paper.name}">
-        <p class="help-block1" id="Msg1"></p>
+        <p class="help-block1" id="Msg1">${ERR_name}</p>
     </div>
     <div class="form-group">
         <label for="bookNumber">书籍库存</label>
         <input type="text" class="form-control" id="bookNumber" name="number" placeholder="请输入纯数字" onblur="validateNum(this)" value="${paper.number}">
-        <p class="help-block2" id="Msg2"></p>
+        <p class="help-block2" id="Msg2">${ERR_number}</p>
     </div>
     <div class="form-group">
         <label for="bookDetail">书籍描述</label>
         <input type="text" id="bookDetail" class="form-control" name="detail" placeholder="简单描述一下书籍内容" onblur="validateDeatil(this)" value="${paper.detail}">
-        <p class="help-block3" id="Msg3"></p>
+        <p class="help-block3" id="Msg3">${ERR_detail}</p>
     </div>
     <input type="button" class="btn btn-info" value="校验信息" id="check" onclick="cl()"/>
     <button type="submit" class="btn btn-primary" disabled="disabled" id="sub_btn">提交</button>
